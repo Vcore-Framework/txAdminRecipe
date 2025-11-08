@@ -20,12 +20,6 @@ tasks:
     src: ./tmp/vcore/myLogo.png
     dest: ./myLogo.png
 
-  # Database Setup
-  - action: connect_database
-  
-  - action: query_database
-    file: https://raw.githubusercontent.com/Vcore-Framework/vCore/main/sql/vcore.sql
-
   # CFX Default Resources
   - action: download_github
     src: https://github.com/citizenfx/cfx-server-data
