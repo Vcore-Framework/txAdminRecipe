@@ -79,36 +79,6 @@ tasks:
     ref: main
     src: https://github.com/Vcore-Framework/vCore
 
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-identity
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-identity
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-spawn
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-spawn
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-hud
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-hud
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-skills
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-skills
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-banking
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-banking
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-admin
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-admin
-
   - action: waste_time
     seconds: 5
 
@@ -118,8 +88,3 @@ tasks:
     dest: ./resources/[standalone]/progressbar
     ref: main
     src: https://github.com/Vcore-Framework/vCore-progressbar
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-phone
-    ref: main
-    src: https://github.com/Vcore-Framework/vCore-phone
