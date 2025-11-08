@@ -3,20 +3,30 @@ $onesync: on
 name: vCore Framework
 version: 2.0.0
 author: vCore Team
-description: The Ultimate, All in 1 Framework for FiveM - A modern, feature-rich RP framework with advanced progression systems
-
-variables:
-  # Database Configuration
-  dbHost: localhost
-  dbUsername: root
-  dbPassword: ""
-  dbName: vcore_db
+description: The Ultimate All-in-One Framework for FiveM - Modern RP framework with advanced systems
 
 tasks:
-  # ============================================
-  # DOWNLOAD BASE SERVER FILES
-  # ============================================
+  # Download server.cfg from recipe repo
+  - action: download_github
+    src: https://github.com/Vcore-Framework/txAdminRecipe
+    ref: main
+    dest: ./tmp/vcore
+
+  - action: move_path
+    src: ./tmp/vcore/server.cfg
+    dest: ./server.cfg
+
+  - action: move_path
+    src: ./tmp/vcore/myLogo.png
+    dest: ./myLogo.png
+
+  # Database Setup
+  - action: connect_database
   
+  - action: query_database
+    file: https://raw.githubusercontent.com/Vcore-Framework/vCore/main/sql/vcore.sql
+
+  # CFX Default Resources
   - action: download_github
     src: https://github.com/citizenfx/cfx-server-data
     subpath: resources
@@ -25,20 +35,7 @@ tasks:
   - action: remove_path
     path: ./resources/[cfx-default]/[gameplay]/chat
 
-  # ============================================
-  # DATABASE SETUP
-  # ============================================
-  
-  - action: connect_database
-  
-  - action: query_database
-    file: ./vcore.sql
-
-  # ============================================
-  # STANDALONE RESOURCES
-  # ============================================
-  
-  # oxmysql - Database Wrapper
+  # oxmysql
   - action: download_file
     path: ./tmp/oxmysql.zip
     url: https://github.com/overextended/oxmysql/releases/latest/download/oxmysql.zip
@@ -47,85 +44,61 @@ tasks:
     dest: ./resources/[standalone]/oxmysql
     src: ./tmp/oxmysql.zip
 
-  # screenshot-basic - For ID cards and licenses
+  # Standalone Resources
   - action: download_github
     dest: ./resources/[standalone]/screenshot-basic
     ref: master
     src: https://github.com/citizenfx/screenshot-basic
 
-  # bob74_ipl - Interior/Map loader
   - action: download_github
     dest: ./resources/[standalone]/bob74_ipl
     ref: master
     src: https://github.com/Bob74/bob74_ipl
 
-  # PolyZone - Zone creation tool
   - action: download_github
     dest: ./resources/[standalone]/PolyZone
     ref: master
     src: https://github.com/mkafrin/PolyZone
 
-  # progressbar - Progress bars for actions
-  - action: download_github
-    dest: ./resources/[standalone]/progressbar
-    ref: main
-    src: https://github.com/qbcore-framework/progressbar
-
-  # interact-sound - Sound system
   - action: download_github
     dest: ./resources/[standalone]/interact-sound
     ref: master
     src: https://github.com/qbcore-framework/interact-sound
 
-  # connectqueue - Connection queue
   - action: download_github
     dest: ./resources/[standalone]/connectqueue
     ref: master
     src: https://github.com/qbcore-framework/connectqueue
 
   - action: waste_time
-    seconds: 10
+    seconds: 5
 
-  # ============================================
-  # VOICE SYSTEM
-  # ============================================
-  
+  # Voice System
   - action: download_github
     dest: ./resources/[voice]/pma-voice
     ref: main
     src: https://github.com/AvarianKnight/pma-voice
 
-  - action: download_github
-    dest: ./resources/[voice]/vcore-radio
-    ref: main
-    src: https://github.com/qbcore-framework/qb-radio
-
-  # ============================================
-  # VCORE CORE RESOURCES
-  # ============================================
-  
-  # Note: Replace these with actual vCore Framework repositories when available
-  # For now, these are placeholder paths - you'll need to replace with your actual repos
-  
+  # vCore Core Resources
   - action: download_github
     dest: ./resources/[vcore]/vcore-core
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-core
+    src: https://github.com/Vcore-Framework/vCore
 
   - action: download_github
-    dest: ./resources/[vcore]/vcore-inventory
+    dest: ./resources/[vcore]/vcore-identity
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-inventory
+    src: https://github.com/Vcore-Framework/vcore-identity
 
   - action: download_github
-    dest: ./resources/[vcore]/vcore-professions
+    dest: ./resources/[vcore]/vcore-spawn
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-professions
+    src: https://github.com/Vcore-Framework/vcore-spawn
 
   - action: download_github
-    dest: ./resources/[vcore]/vcore-organizations
+    dest: ./resources/[vcore]/vcore-hud
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-organizations
+    src: https://github.com/Vcore-Framework/vcore-hud
 
   - action: download_github
     dest: ./resources/[vcore]/vcore-skills
@@ -138,297 +111,21 @@ tasks:
     src: https://github.com/Vcore-Framework/vcore-banking
 
   - action: download_github
-    dest: ./resources/[vcore]/vcore-identity
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-identity
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-hud
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-hud
-
-  - action: download_github
     dest: ./resources/[vcore]/vcore-admin
     ref: main
     src: https://github.com/Vcore-Framework/vcore-admin
 
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-spawn
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-spawn
-
   - action: waste_time
-    seconds: 10
+    seconds: 5
 
-  # ============================================
-  # VCORE GAMEPLAY RESOURCES
-  # ============================================
-  
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-shops
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-shops
+  # vCore Gameplay Resources
 
   - action: download_github
-    dest: ./resources/[vcore]/vcore-garage
+    dest: ./resources/[standalone]/progressbar
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-garage
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-properties
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-properties
-
-  - action: download_github
-    dest: ./resources/[vcore]/vcore-licenses
-    ref: main
-    src: https://github.com/Vcore-Framework/vcore-licenses
+    src: https://github.com/Vcore-Framework/vCore-progressbar
 
   - action: download_github
     dest: ./resources/[vcore]/vcore-phone
     ref: main
-    src: https://github.com/Vcore-Framework/vcore-phone
-
-  # ============================================
-  # MAPS (Optional)
-  # ============================================
-  
-  - action: download_github
-    dest: ./resources/[maps]/gabz_mrpd
-    ref: main
-    src: https://github.com/GabrielGabriel197/gabz_mrpd
-
-  # ============================================
-  # CREATE SERVER.CFG
-  # ============================================
-  
-  - action: write_file
-    file: ./server.cfg
-    data: |
-      # ============================================
-      # vCore Framework Server Configuration
-      # Version: 2.0.0
-      # ============================================
-
-      # Server Information
-      sv_hostname "{{serverName}}"
-      sv_projectName "vCore Framework Server"
-      sv_projectDesc "The Ultimate All-in-One FiveM RP Framework"
-      sets tags "vCore, Roleplay, Framework"
-
-      # Server Settings
-      sv_maxclients {{maxClients}}
-      sv_endpointprivacy true
-      sv_enforceGameBuild 2802
-
-      # Server License & Endpoints
-      sv_licenseKey {{svLicense}}
-      {{serverEndpoints}}
-
-      # OneSync Settings
-      onesync on
-
-      # Steam Web API Key (Required for some features)
-      set steam_webApiKey "none"
-
-      # Database Configuration
-      set mysql_connection_string "{{dbConnectionString}}"
-      set mysql_slow_query_warning 150
-      set mysql_debug false
-
-      # Game Build
-      sv_enforceGameBuild 2802
-
-      # ============================================
-      # FRAMEWORK CONFIGURATION
-      # ============================================
-
-      # vCore Settings
-      setr vcore:version "2.0.0"
-      setr vcore:locale "en"
-      setr vcore:debugMode false
-
-      # Player Settings
-      setr vcore:enablePvP true
-      setr vcore:reviveCommand true
-      setr vcore:enableBlips true
-      setr vcore:startingMoney 5000
-
-      # Profession System
-      setr vcore:enableProfessions true
-      setr vcore:maxSecondaryProfessions 2
-
-      # Organization System
-      setr vcore:enableOrganizations true
-      setr vcore:maxOrganizationMembers 50
-
-      # Skill System
-      setr vcore:enableSkills true
-      setr vcore:skillMultiplier 1.0
-
-      # Economy Settings
-      setr vcore:enableBanking true
-      setr vcore:transferTax 0.02
-      setr vcore:enableCrypto false
-
-      # Voice Settings
-      setr voice_useNativeAudio true
-      setr voice_use3dAudio true
-      setr voice_useSendingRangeOnly true
-
-      # ============================================
-      # ADMIN PERMISSIONS
-      # ============================================
-
-      {{addPrincipalsMaster}}
-      add_ace resource.vcore-admin command allow
-      add_ace resource.vcore-admin command.quit deny
-
-      # ============================================
-      # RESOURCE LOADING ORDER
-      # ============================================
-
-      # Core CFX Resources
-      ensure mapmanager
-      ensure chat
-      ensure spawnmanager
-      ensure sessionmanager
-      ensure basic-gamemode
-      ensure hardcap
-
-      # CFX Default Resources
-      ensure [cfx-default]
-
-      # Standalone Resources
-      ensure oxmysql
-      ensure screenshot-basic
-      ensure bob74_ipl
-      ensure PolyZone
-      ensure progressbar
-      ensure interact-sound
-      ensure connectqueue
-
-      # Voice System
-      ensure pma-voice
-      ensure vcore-radio
-
-      # vCore Core Resources (Load in order!)
-      ensure vcore-core
-      ensure vcore-identity
-      ensure vcore-spawn
-      ensure vcore-hud
-      ensure vcore-inventory
-      ensure vcore-professions
-      ensure vcore-organizations
-      ensure vcore-skills
-      ensure vcore-banking
-      ensure vcore-admin
-
-      # vCore Gameplay Resources
-      ensure vcore-shops
-      ensure vcore-garage
-      ensure vcore-properties
-      ensure vcore-licenses
-      ensure vcore-phone
-
-      # Maps (Optional)
-      # ensure [maps]
-
-      # ============================================
-      # SERVER COMMANDS
-      # ============================================
-
-      # Deny specific dangerous commands
-      add_ace resource.vcore-admin command.quit deny
-
-      # ============================================
-      # LOGGING
-      # ============================================
-
-      set sv_scriptHookAllowed 0
-      set sv_lan 0
-
-      # Console output
-      con_miniConChannels script:*
-      con_miniConChannels script:vcore*
-
-  # ============================================
-  # CREATE README
-  # ============================================
-  
-  - action: write_file
-    file: ./README.md
-    data: |
-      # vCore Framework Server
-      
-      Version: 2.0.0
-      Framework: vCore - The Ultimate All-in-One FiveM RP Framework
-      
-      ## Installation Complete!
-      
-      Your vCore Framework server has been successfully deployed via txAdmin!
-      
-      **Enjoy your vCore Framework server! 🚀**
-      
-      For more information, visit our GitHub organization:
-      https://github.com/Vcore-Framework
-
-  # ============================================
-  # CREATE DATABASE SQL FILE
-  # ============================================
-  
-  - action: write_file
-    file: ./vcore.sql
-    data: |
-      -- vCore Framework Database Installation v2.0.0
-      -- This file is automatically executed during recipe deployment
-      
-      SET NAMES utf8mb4;
-      SET FOREIGN_KEY_CHECKS = 0;
-      SET time_zone = '+00:00';
-      
-      -- Players Table
-      CREATE TABLE IF NOT EXISTS `players` (
-          `id` INT(11) NOT NULL AUTO_INCREMENT,
-          `citizenid` VARCHAR(50) NOT NULL,
-          `identifier` VARCHAR(255) NOT NULL,
-          `steam` VARCHAR(255) DEFAULT NULL,
-          `discord` VARCHAR(255) DEFAULT NULL,
-          `license` VARCHAR(255) NOT NULL,
-          `ip` VARCHAR(50) DEFAULT NULL,
-          `identity` LONGTEXT DEFAULT NULL,
-          `contact` TEXT DEFAULT NULL,
-          `currencies` TEXT DEFAULT NULL,
-          `bank_account` VARCHAR(50) DEFAULT NULL,
-          `profession` TEXT DEFAULT NULL,
-          `secondary_professions` TEXT DEFAULT NULL,
-          `profession_history` TEXT DEFAULT NULL,
-          `organization` TEXT DEFAULT NULL,
-          `organization_history` TEXT DEFAULT NULL,
-          `skills` TEXT DEFAULT NULL,
-          `achievements` TEXT DEFAULT NULL,
-          `statistics` TEXT DEFAULT NULL,
-          `reputation` TEXT DEFAULT NULL,
-          `status` TEXT DEFAULT NULL,
-          `position` TEXT DEFAULT NULL,
-          `bucket` INT(11) DEFAULT 0,
-          `metadata` LONGTEXT DEFAULT NULL,
-          `inventory` LONGTEXT DEFAULT NULL,
-          `max_weight` INT(11) DEFAULT 30000,
-          `licenses` TEXT DEFAULT NULL,
-          `settings` TEXT DEFAULT NULL,
-          `session` TEXT DEFAULT NULL,
-          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          `last_login` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (`id`),
-          UNIQUE KEY `citizenid` (`citizenid`),
-          KEY `identifier` (`identifier`),
-          KEY `license` (`license`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-      
-      -- Add other essential tables here (session_logs, currency_logs, etc.)
-      
-      SET FOREIGN_KEY_CHECKS = 1;
-      
-      SELECT 'vCore Database Initialized Successfully!' as status;
+    src: https://github.com/Vcore-Framework/vCore-phone
